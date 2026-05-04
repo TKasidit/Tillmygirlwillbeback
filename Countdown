@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown to see you!</title>
+    <style>
+        /* สไตล์หน้าจอ */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            text-align: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #ff6b6b;
+        }
+
+        /* ส่วนตัวเลข */
+        #countdown {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .time-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4a90e2;
+        }
+
+        .label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .message {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>อีกนานไหมกว่าจะได้เจอกัน? 💖</h1>
+        <div id="countdown">
+            <div class="time-box">
+                <span class="number" id="days">00</span>
+                <span class="label">วัน</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="hours">00</span>
+                <span class="label">ชม.</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="minutes">00</span>
+                <span class="label">นาที</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="seconds">00</span>
+                <span class="label">วินาที</span>
+            </div>
+        </div>
+        <div class="message" id="message">ตื่นเต้นจังเลย!</div>
+    </div>
+
+    <script>
+        // *** แก้ไขวันที่ตรงนี้ (รูปแบบ: Month Day, Year Time) ***
+        const targetDate = new Date("Dec 31, 2026 23:59:59").getTime();
+
+        const updateCountdown = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            // คำนวณ วัน, ชม., นาที, วินาที
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // แสดงผล
+            document.getElementById("days").innerHTML = days;
+            document.getElementById("hours").innerHTML = hours;
+            document.getElementById("minutes").innerHTML = minutes;
+            document.getElementById("seconds").innerHTML = seconds;
+
+            // ถ้าถึงเวลาแล้ว
+            if (distance < 0) {
+                clearInterval(updateCountdown);
+                document.getElementById("countdown").style.display = "none";
+                document.getElementById("message").innerHTML = "ได้เจอกันแล้ว! 🎉";
+                document.querySelector("h1").innerHTML = "ถึงเวลาแล้วนะ!";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
